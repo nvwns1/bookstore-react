@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-//
+//Define the Mongoose schema for the "book" collection
 const bookSchema = new mongoose.Schema({
     title: {
         type: String,
