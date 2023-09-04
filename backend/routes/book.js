@@ -35,6 +35,11 @@ const upload = multer({
 router.post("/add",upload.single("image"), (req, res) => {
     bookController.addBook(req, res, imageName);
 });
+router.get("/:id", bookController.getBookById);
+
+router.put("/:id", bookController.updateBookById);
+
+router.delete("/:id", bookController.deleteBookById);
 
 
 
