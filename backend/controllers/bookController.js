@@ -31,22 +31,22 @@ class BookController {
   }
 
   async updateBookById(req, res) {
-    const {id} = req.params;
-    const {title, author, price, category, description} = req.body;
+    const { id } = req.params;
+    const { title, author, price, category, description } = req.body;
     try {
-      const book = await Book.findById({_id:id});
-      if(!book){
-        res.status(404).send({success: "false", message:"book not found"})
+      const book = await Book.findById({ _id: id });
+      if (!book) {
+        res.status(404).send({ success: "false", message: "book not found" });
       }
       book.title = title;
-      book.author= author;
+      book.author = author;
       book.price = price;
       book.category = category;
       book.description = description;
       await book.save();
-      res.status(201).send({success: true, message:"updated"})
+      res.status(201).send({ success: true, message: "updated" });
     } catch (error) {
-      res.status(500).send({message:"Internal Server Error"})
+      res.status(500).send({ message: "Internal Server Error" });
     }
   }
 

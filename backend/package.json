@@ -12,7 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "express": "^4.18.2",
+    "express-validator": "^7.0.1",
     "file-type": "^18.5.0",
     "image-size": "^1.0.2",
     "mongoose": "^7.4.5",
