@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { body, validationResult } from "express-validator";
 import userController from "../controllers/userController.js";
+import isAdmin from "../middlewares/adminCheck.js";
 
 const router = Router();
 
@@ -16,6 +17,6 @@ router.post(
 );
 
 router.post("/login", userController.authenticate);
-router.get("/getUserList", userController.getUserList);
+router.get("/getUserList",isAdmin, userController.getUserList);
 
 export default router;
