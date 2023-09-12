@@ -2,6 +2,7 @@ import { Router } from "express";
 import bookController from "../controllers/bookController.js";
 import multer from "multer";
 import Book from "../models/bookModel.js";
+import isAdmin from "../middlewares/adminCheck.js";
 
 const router = Router();
 
@@ -40,7 +41,7 @@ router.post("/add", upload.single("image"), (req, res) => {
 });
 router.get("/:id", bookController.getBookById);
 
-router.put("/:id", bookController.updateBookById);
+router.put("/:id",isAdmin, bookController.updateBookById);
 
 router.delete("/:id", bookController.deleteBookById);
 
