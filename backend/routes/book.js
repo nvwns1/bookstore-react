@@ -39,6 +39,9 @@ const upload = multer({
 router.post("/add", upload.single("image"), (req, res) => {
   bookController.addBook(req, res, imageName);
 });
+
+router.get("/getAllBooks", bookController.getAllBooks);
+
 router.get("/:id", bookController.getBookById);
 
 router.put("/:id",isAdmin, bookController.updateBookById);

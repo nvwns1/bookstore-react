@@ -3,17 +3,20 @@ import Book from "../models/bookModel.js";
 class BookController {
   async addBook(req, res, imageName) {
     try {
-      const data = await Book.create({ ...req.body, image: "http://localhost:3000/public/uploads/"+imageName });
+      const data = await Book.create({
+        ...req.body,
+        image: "http://localhost:8000/public/uploads/" + imageName,
+      });
       console.log(data);
       if (data) {
         res.json(data);
       } else
         res.json({ success: false, message: "Error during Adding the book." });
     } catch (err) {
-      console.log(err.message)
+      console.log(err.message);
       return res.json({
         success: false,
-        message: err.message
+        message: err.message,
       });
     }
   }
@@ -28,6 +31,25 @@ class BookController {
         success: false,
         message: "Error whilte Quering in Database",
       });
+    }
+  }
+
+  async getAllBooks(req, res) {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    try {
+      const skip = (page - 1) * limit; //calculate number of document to skip
+      const totalBooks = await Book.countDocuments();
+
+      const books = await Book.find().skip(skip).limit(limit);
+      res.json({
+        books,
+        currentPage: page,
+        totalPages: Math.ceil(totalBooks / limit),
+      });
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({error: "Error Fetching books"})
     }
   }
 
