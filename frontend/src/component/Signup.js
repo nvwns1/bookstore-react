@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function Signup() {
+export default function Signup(props) {
+  let navigate = useNavigate();
+
   const [credentials, setCredentials] = useState({
     name: "",
     email: "",
@@ -15,21 +18,26 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, email, username, password } = credentials;
+    const { name, email, username, password, cpassword } = credentials;
+    if (cpassword !== password) {
+      props.showAlert("Password and Confirm Password Doesnot Match");
+      return;
+    }
     const response = await fetch("http://localhost:8000/auth/createUser", {
-        method: "POST",
-        headers: {
-            'Content-Type' : 'application/json'
-        }, 
-        body: JSON.stringify({name,username, email, password})
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, username, email, password }),
     });
-    const json = await response.json()
-    console.log(json)
-    if(json.success){
-        localStorage.setItem("token", json['auth-token'])
-        console.log("created account")
-    }else{
-        console.log("Invalid Details")
+    const json = await response.json();
+    if (json.success) {
+      localStorage.setItem("token", json["auth-token"]);
+      navigate("/");
+      props.showAlert('Account Created Successfully')
+      console.log("created account");
+    } else {
+      console.log("Invalid Details");
     }
   };
   return (
@@ -44,6 +52,7 @@ export default function Signup() {
           id="name"
           value={credentials.name}
           onChange={onChange}
+          required
         />
 
         <label htmlFor="username">Username:</label>
@@ -53,6 +62,7 @@ export default function Signup() {
           id="username"
           value={credentials.username}
           onChange={onChange}
+          required
         />
 
         <label htmlFor="email">Email:</label>
@@ -62,6 +72,7 @@ export default function Signup() {
           id="email"
           value={credentials.email}
           onChange={onChange}
+          required
         />
 
         <label htmlFor="password">Password:</label>
@@ -71,6 +82,7 @@ export default function Signup() {
           id="password"
           value={credentials.password}
           onChange={onChange}
+          required
         />
 
         <label htmlFor="email">Confirm Password:</label>
@@ -80,6 +92,7 @@ export default function Signup() {
           id="cpassword"
           value={credentials.cpassword}
           onChange={onChange}
+          required
         />
 
         <input type="submit" value="Signup" />
