@@ -68,6 +68,13 @@ nav a {
   padding-right: 20px;
   color: #1d1c1c;
 }
+.logout-btn {
+  text-decoration: none;
+  padding: 10px;
+  display: block;
+  padding-right: 20px;
+  color: #1d1c1c;
+}
 
 form {
   width: 50%;
@@ -114,7 +121,9 @@ input[type="submit"] {
 .alert {
   background-color: #f44336;
   color: white;
-  padding: 10px;
+  padding: 20px;
   margin: 0 10px;
   border-radius: 40px;
+  display: flex;
+  justify-content: center;
 }

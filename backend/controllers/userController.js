@@ -35,18 +35,18 @@ class UserController {
     try {
       const response = await User.findOne({ username: req.body.username });
       if (response == null) {
-        return res.status(400).json({ message: "user doesnot exist" });
+        return res.status(400).json({ message: "Username doesnot exist." });
       } else {
         const match = bcrypt.compareSync(req.body.password, response.password);
         if (match) {
           const token = jwt.sign({id: response.id}, process.env.JWT_SECRET);
           return res
             .status(200)
-            .json({ message: "user login success", success: true, token});
+            .json({ message: "User Login Success", success: true, token});
         }else{
           return res
           .status(200)
-          .json({ message: "username and password doesnot match", success: false});
+          .json({ message: "Username and password doesnot match.", success: false});
         }
       }
     } catch (error) {

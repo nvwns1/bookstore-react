@@ -34,7 +34,7 @@ export default function Signup(props) {
     if (json.success) {
       localStorage.setItem("token", json["auth-token"]);
       navigate("/");
-      props.showAlert('Account Created Successfully')
+      props.showAlert("Account Created Successfully");
       console.log("created account");
     } else {
       console.log("Invalid Details");
