@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login(props) {
   let navigate = useNavigate();
@@ -10,6 +10,11 @@ export default function Login(props) {
   const [remember, setRemember] = useState(true);
   const handleRemember = () => {
     setRemember(!remember);
+  };
+
+  const [visible, setVisible] = useState(false);
+  const handleVisible = () => {
+    setVisible(!visible);
   };
 
   const onChange = (e) => {
@@ -38,7 +43,12 @@ export default function Login(props) {
       } else {
         sessionStorage.setItem("token", json["token"]);
       }
-      navigate("/");
+      if (username === "admin") {
+        localStorage.setItem("admin", json["token"])
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
       props.showAlert("Welcome to Book Store");
     } else {
       props.showAlert(json.message);
@@ -56,17 +66,24 @@ export default function Login(props) {
           name="username"
           value={credentials.name}
           onChange={onChange}
+          autoComplete="username"
           required
         />
         <label htmlFor="password">Password:</label>
-        <input
-          type="text"
-          id="password"
-          name="password"
-          value={credentials.name}
-          onChange={onChange}
-          required
-        />
+        <div className="password">
+          <input
+            type={visible ? "text" : "password"}
+            id="password"
+            name="password"
+            value={credentials.name}
+            onChange={onChange}
+            required
+            autoComplete="current-password"
+          />
+          {credentials.password !== "" && (
+            <span onClick={handleVisible}>{visible ? "Hide" : "Show"}</span>
+          )}
+        </div>
         <input
           type="checkbox"
           id="check"
@@ -75,9 +92,12 @@ export default function Login(props) {
           required
         />
         <label htmlFor="check">Remember me </label>
-
         <br />
         <input type="submit" value="Login" />
+        <br />
+        <br />
+        Create an account! &nbsp;&nbsp;
+        <Link to="/signup">Signup</Link>
       </form>
     </>
   );
