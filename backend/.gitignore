@@ -15,3 +15,6 @@ npm-debug.log
 # Logs
 logs/
 *.log
+
+
+public/uploads

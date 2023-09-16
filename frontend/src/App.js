@@ -8,6 +8,7 @@ import Alert from "./component/Alert";
 import { useState } from "react";
 import Home from "./component/Home";
 import Admin from "./component/Admin";
+import BookState from "./context/book/BookState";
 
 function App() {
   const [alert, setAlert] = useState(null);
@@ -19,6 +20,7 @@ function App() {
   };
   return (
     <div>
+      <BookState>
       <Router>
         <Navbar />
         <Alert alert={alert} />
@@ -30,6 +32,7 @@ function App() {
           <Route path="/signup" element={<Signup showAlert={showAlert} />} />
         </Routes>
       </Router>
+      </BookState>
     </div>
   );
 }

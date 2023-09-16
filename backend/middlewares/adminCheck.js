@@ -12,7 +12,7 @@ export default async function isAdmin(req, res, next) {
   const userId = data.id
   const user = await User.findById(userId);
   if(user && user.role === 'admin'){
-    //how to get req.user.role 
+    //if user is admin
     next()
   }else{
     return res.status(401).json({ message: "problem denied", success: false });

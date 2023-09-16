@@ -36,7 +36,7 @@ const upload = multer({
     }
   },
 });
-router.post("/add", upload.single("image"), (req, res) => {
+router.post("/add",isAdmin, upload.single("image"), (req, res) => {
   bookController.addBook(req, res, imageName);
 });
 
